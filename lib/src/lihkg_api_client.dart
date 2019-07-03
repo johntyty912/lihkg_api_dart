@@ -124,8 +124,10 @@ class LihkgClient extends http.BaseClient {
     }
   }
 
-  Future<BaseResponse<SearchResponse>> getSearch(String q,
-      {String sort = 'score', int page = 1}) async {
+  Future<BaseResponse<SearchResponse>> getSearch(
+      String q, //sort can be 'score','desc_create_time','desc_reply_time'
+      {String sort = 'score',
+      int page = 1}) async {
     final String searchURL = 'https://lihkg.com/api_v2/thread/search';
     Map<String, String> query = {
       'q': q,
@@ -137,6 +139,25 @@ class LihkgClient extends http.BaseClient {
     final response = await this.get(uri.toString(), headers: this.headers);
     if (response.statusCode == 200) {
       return BaseResponse<SearchResponse>.fromJson(json.decode(response.body));
+    } else {
+      throw HttpException(
+          'Unexpected status code ${response.statusCode}:'
+          ' ${response.reasonPhrase}',
+          uri: uri);
+    }
+  }
+
+  Future<BaseResponse<LikeResponse>> vote(ItemData post,
+      {bool isLike = true}) async {
+    String url = "https://lihkg.com/api_v2/thread/${post.threadID}";
+    url += post.msgNum != "1" ? "/${post.postID}" : "";
+    url += isLike ? "/like" : "/dislike";
+    final Uri uri = Uri.parse(url);
+    final response = post.msgNum != "1"
+        ? await this.get(uri.toString(), headers: this.headers)
+        : await this.post(uri.toString(), headers: this.headers);
+    if (response.statusCode == 200) {
+      return BaseResponse<LikeResponse>.fromJson(json.decode(response.body));
     } else {
       throw HttpException(
           'Unexpected status code ${response.statusCode}:'

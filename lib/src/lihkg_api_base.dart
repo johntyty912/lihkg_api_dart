@@ -44,6 +44,9 @@ class BaseResponse<T> {
       case SearchResponse:
         return SearchResponse.fromJson(json) as T;
         break;
+      case LikeResponse:
+        return LikeResponse.fromJson(json) as T;
+        break;
       default:
         throw Exception("Unknow type");
     }
