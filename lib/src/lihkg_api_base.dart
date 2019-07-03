@@ -376,9 +376,9 @@ class Item {
   @JsonKey(name: 'no_of_uni_user_reply')
   final String noOfUniUserReply;
   @JsonKey(name: 'like_count')
-  final String likeCount;
+  final dynamic likeCount;
   @JsonKey(name: 'dislike_count')
-  final String dislikeCount;
+  final dynamic dislikeCount;
   @JsonKey(name: 'reply_like_count')
   final String replyLikeCount;
   @JsonKey(name: 'reply_dislike_count')
