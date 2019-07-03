@@ -304,9 +304,9 @@ class ItemData {
   @JsonKey(name: "user_gender")
   final String userGender;
   @JsonKey(name: "like_count")
-  final String likeCount;
+  final dynamic likeCount;
   @JsonKey(name: "dislike_count")
-  final String dislikeCount;
+  final dynamic dislikeCount;
   @JsonKey(name: "vote_score")
   final String voteScore;
   @JsonKey(name: "no_of_quote")
