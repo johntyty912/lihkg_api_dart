@@ -1,10 +1,8 @@
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'lihkg_api_base.g.dart';
 
 @JsonSerializable()
-// abstract
 class BaseResponse<T> {
   BaseResponse({
     this.errorCode,
@@ -29,16 +27,25 @@ class BaseResponse<T> {
   Map<String, dynamic> toJson() => _$BaseResponseToJson(this);
 
   static T _dataFromJson<T>(Map<String, dynamic> json) {
-    if (T == PropertyResponse) {
-      return PropertyResponse.fromJson(json) as T;
-    } else if (T == CategoryResponse) {
-      return CategoryResponse.fromJson(json) as T;
-    } else if (T == PageResponse) {
-      return PageResponse.fromJson(json) as T;
-    } else if (T == LoginResponse) {
-      return LoginResponse.fromJson(json) as T;
-    } else {
-      throw Exception("Unknow type");
+    if (json == null) return null;
+    switch (T) {
+      case PropertyResponse:
+        return PropertyResponse.fromJson(json) as T;
+        break;
+      case CategoryResponse:
+        return CategoryResponse.fromJson(json) as T;
+        break;
+      case PageResponse:
+        return PageResponse.fromJson(json) as T;
+        break;
+      case LoginResponse:
+        return LoginResponse.fromJson(json) as T;
+        break;
+      case SearchResponse:
+        return SearchResponse.fromJson(json) as T;
+        break;
+      default:
+        throw Exception("Unknow type");
     }
   }
 
@@ -52,6 +59,8 @@ class PropertyResponse {
     this.lihkg,
     this.categoryList,
     this.fixedCategoryList,
+    this.categoryOrder,
+    this.me,
     this.config,
   });
 
@@ -64,6 +73,9 @@ class PropertyResponse {
   final List<Category> categoryList;
   @JsonKey(name: 'fixed_category_list')
   final List<FixedCategory> fixedCategoryList;
+  @JsonKey(name: 'category_order')
+  final List<String> categoryOrder;
+  final User me;
   final dynamic config;
 }
 
@@ -73,6 +85,7 @@ class CategoryResponse {
     this.category,
     this.isPagination,
     this.items,
+    this.me,
   });
 
   factory CategoryResponse.fromJson(Map<String, dynamic> json) =>
@@ -83,6 +96,27 @@ class CategoryResponse {
   @JsonKey(name: 'is_pagination')
   final bool isPagination;
   final List<Item> items;
+  final User me;
+}
+
+@JsonSerializable()
+class SearchResponse {
+  SearchResponse({
+    this.category,
+    this.isPagination,
+    this.items,
+    this.me,
+  });
+
+  factory SearchResponse.fromJson(Map<String, dynamic> json) =>
+      _$SearchResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$SearchResponseToJson(this);
+
+  final Category category;
+  @JsonKey(name: 'is_pagination')
+  final bool isPagination;
+  final List<Item> items;
+  final User me;
 }
 
 @JsonSerializable()
@@ -118,6 +152,7 @@ class PageResponse {
     this.user,
     this.page,
     this.itemData,
+    this.me,
   });
 
   factory PageResponse.fromJson(Map<String, dynamic> json) =>
@@ -178,6 +213,7 @@ class PageResponse {
   final User user;
   @JsonKey(name: 'item_data')
   final List<ItemData> itemData;
+  final User me;
 }
 
 @JsonSerializable()
@@ -203,6 +239,29 @@ class LoginResponse {
   final User user;
   @JsonKey(name: "fixed_category_list")
   final List<FixedCategory> fixedCategoryList;
+  final User me;
+}
+
+@JsonSerializable()
+class LikeResponse {
+  LikeResponse({
+    this.isLike,
+    this.isUpvote,
+    this.thread,
+    this.post,
+    this.me,
+  });
+
+  factory LikeResponse.fromJson(Map<String, dynamic> json) =>
+      _$LikeResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$LikeResponseToJson(this);
+
+  @JsonKey(name: 'is_like')
+  final bool isLike;
+  @JsonKey(name: 'is_upvote')
+  final bool isUpvote;
+  final Item thread;
+  final ItemData post;
   final User me;
 }
 
@@ -366,7 +425,7 @@ class Category {
   Map<String, dynamic> toJson() => _$CategoryToJson(this);
 
   @JsonKey(name: 'cat_id')
-  final String catId;
+  final dynamic catId;
   final String name;
   final bool postable;
   final String type;

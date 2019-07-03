@@ -4,5 +4,6 @@
 library lihkg_api;
 
 export 'src/lihkg_api_base.dart';
+export 'src/lihkg_api_client.dart';
 
 // TODO: Export any libraries intended for clients of this package.

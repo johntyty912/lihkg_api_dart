@@ -37,6 +37,11 @@ PropertyResponse _$PropertyResponseFromJson(Map<String, dynamic> json) {
               ? null
               : FixedCategory.fromJson(e as Map<String, dynamic>))
           ?.toList(),
+      categoryOrder:
+          (json['category_order'] as List)?.map((e) => e as String)?.toList(),
+      me: json['me'] == null
+          ? null
+          : User.fromJson(json['me'] as Map<String, dynamic>),
       config: json['config']);
 }
 
@@ -45,6 +50,8 @@ Map<String, dynamic> _$PropertyResponseToJson(PropertyResponse instance) =>
       'lihkg': instance.lihkg,
       'category_list': instance.categoryList,
       'fixed_category_list': instance.fixedCategoryList,
+      'category_order': instance.categoryOrder,
+      'me': instance.me,
       'config': instance.config
     };
 
@@ -57,14 +64,41 @@ CategoryResponse _$CategoryResponseFromJson(Map<String, dynamic> json) {
       items: (json['items'] as List)
           ?.map((e) =>
               e == null ? null : Item.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+          ?.toList(),
+      me: json['me'] == null
+          ? null
+          : User.fromJson(json['me'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$CategoryResponseToJson(CategoryResponse instance) =>
     <String, dynamic>{
       'category': instance.category,
       'is_pagination': instance.isPagination,
-      'items': instance.items
+      'items': instance.items,
+      'me': instance.me
+    };
+
+SearchResponse _$SearchResponseFromJson(Map<String, dynamic> json) {
+  return SearchResponse(
+      category: json['category'] == null
+          ? null
+          : Category.fromJson(json['category'] as Map<String, dynamic>),
+      isPagination: json['is_pagination'] as bool,
+      items: (json['items'] as List)
+          ?.map((e) =>
+              e == null ? null : Item.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      me: json['me'] == null
+          ? null
+          : User.fromJson(json['me'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$SearchResponseToJson(SearchResponse instance) =>
+    <String, dynamic>{
+      'category': instance.category,
+      'is_pagination': instance.isPagination,
+      'items': instance.items,
+      'me': instance.me
     };
 
 PageResponse _$PageResponseFromJson(Map<String, dynamic> json) {
@@ -107,7 +141,10 @@ PageResponse _$PageResponseFromJson(Map<String, dynamic> json) {
       itemData: (json['item_data'] as List)
           ?.map((e) =>
               e == null ? null : ItemData.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+          ?.toList(),
+      me: json['me'] == null
+          ? null
+          : User.fromJson(json['me'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$PageResponseToJson(PageResponse instance) =>
@@ -141,7 +178,8 @@ Map<String, dynamic> _$PageResponseToJson(PageResponse instance) =>
       'remark': instance.remark,
       'category': instance.category,
       'user': instance.user,
-      'item_data': instance.itemData
+      'item_data': instance.itemData,
+      'me': instance.me
     };
 
 LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) {
@@ -170,6 +208,30 @@ Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
       'category_order': instance.categoryOrder,
       'user': instance.user,
       'fixed_category_list': instance.fixedCategoryList,
+      'me': instance.me
+    };
+
+LikeResponse _$LikeResponseFromJson(Map<String, dynamic> json) {
+  return LikeResponse(
+      isLike: json['is_like'] as bool,
+      isUpvote: json['is_upvote'] as bool,
+      thread: json['thread'] == null
+          ? null
+          : Item.fromJson(json['thread'] as Map<String, dynamic>),
+      post: json['post'] == null
+          ? null
+          : ItemData.fromJson(json['post'] as Map<String, dynamic>),
+      me: json['me'] == null
+          ? null
+          : User.fromJson(json['me'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$LikeResponseToJson(LikeResponse instance) =>
+    <String, dynamic>{
+      'is_like': instance.isLike,
+      'is_upvote': instance.isUpvote,
+      'thread': instance.thread,
+      'post': instance.post,
       'me': instance.me
     };
 
@@ -287,7 +349,7 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
 
 Category _$CategoryFromJson(Map<String, dynamic> json) {
   return Category(
-      catId: json['cat_id'] as String,
+      catId: json['cat_id'],
       name: json['name'] as String,
       postable: json['postable'] as bool,
       type: json['type'] as String,
