@@ -73,9 +73,9 @@ class LihkgClient extends http.BaseClient {
     final String loginURL = "https://lihkg.com/api_v2/auth/login";
     final response = await this.post(loginURL, body: body);
     if (response.statusCode == 200) {
-      this.logined = true;
       this.loginResponse =
           BaseResponse<LoginResponse>.fromJson(json.decode(response.body));
+      this.logined = true;
       return this.loginResponse;
     } else {
       throw HttpException(
