@@ -14,6 +14,11 @@ class LihkgClient extends http.BaseClient {
   bool logined = false;
   BaseResponse<LoginResponse> loginResponse;
 
+  logout() {
+    this.logined = false;
+    this.loginResponse = null;
+  }
+
   @override
   Future<http.Response> get(url, {Map<String, String> headers}) {
     Map<String, String> _headers =
