@@ -253,6 +253,17 @@ Map<String, dynamic> _$ReplyResponseToJson(ReplyResponse instance) =>
       'me': instance.me
     };
 
+CreateResponse _$CreateResponseFromJson(Map<String, dynamic> json) {
+  return CreateResponse(
+      threadID: json['thread_id'] as String,
+      me: json['me'] == null
+          ? null
+          : User.fromJson(json['me'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$CreateResponseToJson(CreateResponse instance) =>
+    <String, dynamic>{'thread_id': instance.threadID, 'me': instance.me};
+
 ItemData _$ItemDataFromJson(Map<String, dynamic> json) {
   return ItemData(
       postID: json['post_id'] as String,

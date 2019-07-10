@@ -187,6 +187,25 @@ class LihkgClient extends http.BaseClient {
           uri: Uri.parse(url));
     }
   }
+
+  Future<BaseResponse<CreateResponse>> postCreate(String catID, String subCatID, String title, String content) async {
+    String url = "https://lihkg.com/api_v2/thread/create";
+    Map<String,String> body = {
+      "cat_id": catID,
+      "title": title,
+      "content": content,
+      "sub_cat_id": subCatID,
+    };
+    final response = await this.post(url, headers: this.headers, body: body);
+    if (response.statusCode == 200) {
+      return BaseResponse<CreateResponse>.fromJson(json.decode(response.body));
+    } else {
+      throw HttpException(
+          'Unexpected status code ${response.statusCode}:'
+          ' ${response.reasonPhrase}',
+          uri: Uri.parse(url));
+    }
+  }
 }
 
 String _body2query(Map<String, dynamic> body) {

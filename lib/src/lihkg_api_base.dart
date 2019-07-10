@@ -50,6 +50,9 @@ class BaseResponse<T> {
       case ReplyResponse:
         return ReplyResponse.fromJson(json) as T;
         break;
+      case CreateResponse:
+        return CreateResponse.fromJson(json) as T;
+        break;
       default:
         throw Exception("Unknow type");
     }
@@ -289,6 +292,22 @@ class ReplyResponse {
   final String threadID;
   @JsonKey(name: 'total_page')
   final int totalPage;
+  final User me;
+}
+
+@JsonSerializable()
+class CreateResponse {
+  CreateResponse({
+    this.threadID,
+    this.me,
+  });
+
+  factory CreateResponse.fromJson(Map<String, dynamic> json) =>
+      _$CreateResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$CreateResponseToJson(this);
+
+  @JsonKey(name: 'thread_id')
+  final String threadID;
   final User me;
 }
 
