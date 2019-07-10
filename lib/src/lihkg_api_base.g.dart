@@ -112,8 +112,8 @@ PageResponse _$PageResponseFromJson(Map<String, dynamic> json) {
       userGender: json['user_gender'] as String,
       noOfReply: json['no_of_reply'] as String,
       noOfUniUserReply: json['no_of_uni_user_reply'] as String,
-      likeCount: json['like_count'] as String,
-      dislikeCount: json['dislike_count'] as String,
+      likeCount: json['like_count'],
+      dislikeCount: json['dislike_count'],
       replyLikeCount: json['reply_like_count'] as String,
       replyDislikeCount: json['reply_dislike_count'] as String,
       maxReplyLikeCount: json['max_reply_like_count'] as String,
@@ -232,6 +232,24 @@ Map<String, dynamic> _$LikeResponseToJson(LikeResponse instance) =>
       'is_upvote': instance.isUpvote,
       'thread': instance.thread,
       'post': instance.post,
+      'me': instance.me
+    };
+
+ReplyResponse _$ReplyResponseFromJson(Map<String, dynamic> json) {
+  return ReplyResponse(
+      noOfReply: json['no_of_reply'] as int,
+      threadID: json['thread_id'] as String,
+      totalPage: json['total_page'] as int,
+      me: json['me'] == null
+          ? null
+          : User.fromJson(json['me'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$ReplyResponseToJson(ReplyResponse instance) =>
+    <String, dynamic>{
+      'no_of_reply': instance.noOfReply,
+      'thread_id': instance.threadID,
+      'total_page': instance.totalPage,
       'me': instance.me
     };
 

@@ -47,13 +47,15 @@ class BaseResponse<T> {
       case LikeResponse:
         return LikeResponse.fromJson(json) as T;
         break;
+      case ReplyResponse:
+        return ReplyResponse.fromJson(json) as T;
+        break;
       default:
         throw Exception("Unknow type");
     }
   }
 
-  static Map<String, dynamic> _dataToJson<T>(T response) =>
-      {'response': response};
+  static Map<String, dynamic> _dataToJson<T>(T response) => {'response': response};
 }
 
 @JsonSerializable()
@@ -265,6 +267,28 @@ class LikeResponse {
   final bool isUpvote;
   final Item thread;
   final ItemData post;
+  final User me;
+}
+
+@JsonSerializable()
+class ReplyResponse {
+  ReplyResponse({
+    this.noOfReply,
+    this.threadID,
+    this.totalPage,
+    this.me,
+  });
+
+  factory ReplyResponse.fromJson(Map<String, dynamic> json) =>
+      _$ReplyResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$ReplyResponseToJson(this);
+
+  @JsonKey(name: 'no_of_reply')
+  final int noOfReply;
+  @JsonKey(name: 'thread_id')
+  final String threadID;
+  @JsonKey(name: 'total_page')
+  final int totalPage;
   final User me;
 }
 

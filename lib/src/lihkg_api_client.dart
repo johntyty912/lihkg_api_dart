@@ -170,6 +170,23 @@ class LihkgClient extends http.BaseClient {
           uri: uri);
     }
   }
+
+  Future<BaseResponse<ReplyResponse>> postReply(String threadID, String content) async {
+    String url = "https://lihkg.com/api_v2/thread/reply";
+    Map<String,String> body = {
+      "thread_id": threadID,
+      "content": content,
+    };
+    final response = await this.post(url, headers: this.headers, body: body);
+    if (response.statusCode == 200) {
+      return BaseResponse<ReplyResponse>.fromJson(json.decode(response.body));
+    } else {
+      throw HttpException(
+          'Unexpected status code ${response.statusCode}:'
+          ' ${response.reasonPhrase}',
+          uri: Uri.parse(url));
+    }
+  }
 }
 
 String _body2query(Map<String, dynamic> body) {
@@ -178,7 +195,7 @@ String _body2query(Map<String, dynamic> body) {
   } else {
     List<String> result = new List<String>();
     body.forEach((k, v) {
-      result.add("$k=$v");
+      result.add("${Uri.encodeComponent(k)}=${Uri.encodeComponent(v)}");
     });
     return result.join("&");
   }
