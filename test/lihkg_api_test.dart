@@ -29,14 +29,14 @@ void main() {
       Map<String, dynamic> body =
           json.decode(await File('user.json').readAsString());
       loginResponse = await _client.postLogin(body);
-      // propertyResponse = await _client.getProperty();
-      // subCategoryList = propertyResponse
-      //     .response
-      //     .categoryList[
-      //         random.nextInt(propertyResponse.response.categoryList.length)]
-      //     .subCategory;
-      // subCategory = subCategoryList[random.nextInt(subCategoryList.length)];
-      // categoryResponse = await _client.getCategory(subCategory, 1);
+      propertyResponse = await _client.getProperty();
+      subCategoryList = propertyResponse
+          .response
+          .categoryList[
+              random.nextInt(propertyResponse.response.categoryList.length)]
+          .subCategory;
+      subCategory = subCategoryList[random.nextInt(subCategoryList.length)];
+      categoryResponse = await _client.getCategory(subCategory, 1);
       // threadList = categoryResponse.response.items;
       // thread = threadList[random.nextInt(threadList.length)];
       // pageResponse = await _client.getPage(thread.threadID, page: 1);
@@ -49,14 +49,14 @@ void main() {
       expect(loginResponse.success, 1);
     });
 
-    // test('Get Property Test', () {
-    //   expect(propertyResponse.success, 1);
-    // });
+    test('Get Property Test', () {
+      expect(propertyResponse.success, 1);
+    });
 
-    // test('Get Category Test', () {
-    //   print("${subCategory.url}, ${subCategory.query}");
-    //   expect(categoryResponse.success, 1);
-    // });
+    test('Get Category Test', () {
+      print("${subCategory.url}, ${subCategory.query}");
+      expect(categoryResponse.success, 1);
+    });
 
     // test('Get Page Test', () {
     //   expect(pageResponse.success, 1);

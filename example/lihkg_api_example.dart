@@ -17,9 +17,12 @@ main() async {
   String threadID = "1304081";
   String content = "PUSH";
 
-  const oneMin = const Duration(seconds:60);
-  Timer.periodic(oneMin, (Timer t) async {
-    replyResponse = await _client.postReply(threadID, content);
-    print(replyResponse.success == 1? "reply success": "fail: ${replyResponse.errorMessage}");
+  const oneSec = const Duration(seconds:1);
+  const fiveSec = const Duration(seconds:5);
+  Timer.periodic(oneSec, (Timer t) async {
+    // replyResponse = await _client.postReply(threadID, content);
+    // print(replyResponse.success == 1? "reply success": "fail: ${replyResponse.errorMessage}");
+    print("hihihi");
   });
+  print("hi");
 }

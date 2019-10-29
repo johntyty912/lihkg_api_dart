@@ -16,3 +16,7 @@ dev_dependencies:
   test: ^1.0.0
   build_runner: ^1.0.0
   json_serializable: ^3.0.0
+
+assets:
+  - assets/json/category.json
+  - assets/json/property.json
