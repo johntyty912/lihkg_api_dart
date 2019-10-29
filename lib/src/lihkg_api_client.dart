@@ -66,12 +66,12 @@ class LihkgClient extends http.BaseClient {
       return BaseResponse<PropertyResponse>.fromJson(
           json.decode(response.body));
     } else {
-      Map dummy = json.decode(await new File('assets/json/property.json').readAsString());
-      return BaseResponse<PropertyResponse>.fromJson(dummy);
-      // throw HttpException(
-      //     'Unexpected status code ${response.statusCode}:'
-      //     ' ${response.reasonPhrase}',
-      //     uri: Uri.parse(propertyURL));
+      // Map dummy = json.decode(await new File('assets/json/property.json').readAsString());
+      // return BaseResponse<PropertyResponse>.fromJson(dummy);
+      throw HttpException(
+          'Unexpected status code ${response.statusCode}:'
+          ' ${response.reasonPhrase}',
+          uri: Uri.parse(propertyURL));
     }
   }
 
@@ -85,12 +85,12 @@ class LihkgClient extends http.BaseClient {
       this.logined = true;
       return this.loginResponse;
     } else {
-      Map dummy = json.decode(await new File('assets/json/login_success.json').readAsString());
-      return BaseResponse<LoginResponse>.fromJson(dummy);
-      // throw HttpException(
-      //     'Unexpected status code ${response.statusCode}:'
-      //     ' ${response.reasonPhrase}',
-      //     uri: Uri.parse(loginURL));
+      // Map dummy = json.decode(await new File('assets/json/login_success.json').readAsString());
+      // return BaseResponse<LoginResponse>.fromJson(dummy);
+      throw HttpException(
+          'Unexpected status code ${response.statusCode}:'
+          ' ${response.reasonPhrase}',
+          uri: Uri.parse(loginURL));
     }
   }
 
@@ -108,12 +108,12 @@ class LihkgClient extends http.BaseClient {
       return BaseResponse<CategoryResponse>.fromJson(
           json.decode(response.body));
     } else {
-      Map dummy = json.decode(await new File('assets/json/category.json').readAsString());
-      return BaseResponse<CategoryResponse>.fromJson(dummy);
-      // throw HttpException(
-      //     'Unexpected status code ${response.statusCode}:'
-      //     ' ${response.reasonPhrase}',
-      //     uri: uri);
+      // Map dummy = json.decode(await new File('assets/json/category.json').readAsString());
+      // return BaseResponse<CategoryResponse>.fromJson(dummy);
+      throw HttpException(
+          'Unexpected status code ${response.statusCode}:'
+          ' ${response.reasonPhrase}',
+          uri: uri);
     }
   }
 
